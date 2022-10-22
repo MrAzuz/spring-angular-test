@@ -16,6 +16,12 @@ public class OrderDto {
 		super();
 	}
 
+	public OrderDto(String reference, Date date) {
+		super();
+		this.reference = reference;
+		this.date = date;
+	}
+
 	public OrderDto(String reference, Date date, List<Article> articles) {
 		super();
 		this.reference = reference;

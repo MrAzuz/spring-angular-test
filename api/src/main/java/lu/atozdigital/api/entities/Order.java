@@ -18,16 +18,23 @@ public class Order {
 
 	private String reference;
 
-	@JsonFormat(pattern = "dd/MM/yyyy")
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date date;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE })
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
 	@JoinTable(name = "ORDER_PRODUCTS", joinColumns = { @JoinColumn(name = "order_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "product_id") })
 	private List<Article> articles = new ArrayList<>();
 
 	public Order() {
 		super();
+	}
+
+	public Order(Long id, String reference, Date date) {
+		super();
+		this.id = id;
+		this.reference = reference;
+		this.date = date;
 	}
 
 	public Order(String reference, Date date, List<Article> articles) {
@@ -73,11 +80,5 @@ public class Order {
 	public String toString() {
 		return "Order [id=" + id + ", reference=" + reference + ", date=" + date + ", articles=" + articles + "]";
 	}
-	
-	
-	
-	
-	
-	
 
 }

@@ -49,6 +49,8 @@ public class ApiApplication implements CommandLineRunner {
 		o1.setDate(new Date());
 		o1.setReference(RandomString.getAlphaNumericString(10));
 		o1.setArticles(articles);
+		//orderRepository.save(o1);
+
 		
 		Order o2 = new Order();
 		o2.setDate(new Date());

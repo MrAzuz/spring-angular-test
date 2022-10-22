@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import lu.atozdigital.api.dto.OrderDto;
 import lu.atozdigital.api.entities.Order;
 import lu.atozdigital.api.repository.OrderRepository;
 
@@ -23,6 +24,18 @@ public class OrderServiceImpl implements OrderService {
 		List<Order> orders = new ArrayList<Order>();
 		orderRepository.findAll().forEach(orders::add);
 		return orders;
+	}
+
+	@Override
+	public Order addOrder(OrderDto orderDto) {
+		
+		Order order = new Order();
+		order.setDate(orderDto.getDate());
+		order.setReference(orderDto.getReference());
+		order.setArticles(orderDto.getArticles());
+		
+		return orderRepository.save(order);
+		
 	}
 
 }
