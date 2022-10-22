@@ -1,6 +1,8 @@
 package lu.atozdigital.api.service;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -31,7 +33,7 @@ public class ArticleServiceImpl implements ArticleService {
 		article.setPrice(articleDto.getPrice());
 		article.setPicture(fileName);
 
-		//upload directory 
+		// upload directory
 		String uploadDir = "articles-images/";
 		FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
 
@@ -39,11 +41,10 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public Article updateInfos(Long id, ArticleDto articleDto) {
-		Article article = articleRepository.findById(id).get();
-		article.setName(articleDto.getName());
-		article.setPrice(articleDto.getPrice());
-		return articleRepository.save(article);
+	public Optional<Article> getArticleById(Long id) {
+		
+		return articleRepository.findById(id);
 	}
+
 
 }

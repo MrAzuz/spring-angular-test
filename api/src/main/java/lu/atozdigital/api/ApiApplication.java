@@ -9,7 +9,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import lu.atozdigital.api.entities.Article;
 import lu.atozdigital.api.repository.ArticleRepository;
-import lu.atozdigital.api.service.ArticleService;
 
 @SpringBootApplication
 public class ApiApplication implements CommandLineRunner {
