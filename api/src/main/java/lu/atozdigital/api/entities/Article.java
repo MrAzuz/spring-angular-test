@@ -1,25 +1,28 @@
 package lu.atozdigital.api.entities;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "ARTICLE")
 public class Article {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
 	private BigDecimal price;
 	@Column(nullable = true, length = 64)
 	private String picture;
+
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE }, mappedBy = "articles")
+	@JsonIgnore
+	private List<Order	> orders = new ArrayList<>();
 
 	public Article() {
 		super();
@@ -63,5 +66,23 @@ public class Article {
 	public void setPicture(String picture) {
 		this.picture = picture;
 	}
+
+	@Override
+	public String toString() {
+		return "Article [id=" + id + ", name=" + name + ", price=" + price + ", picture=" + picture + "]";
+	}
+
+	public List<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
+	}
+	
+	
+	
+	
+	
 
 }
