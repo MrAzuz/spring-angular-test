@@ -2,6 +2,7 @@ package lu.atozdigital.api.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -28,14 +29,32 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public Order addOrder(OrderDto orderDto) {
-		
+
 		Order order = new Order();
 		order.setDate(orderDto.getDate());
 		order.setReference(orderDto.getReference());
 		order.setArticles(orderDto.getArticles());
-		
+
 		return orderRepository.save(order);
-		
+
+	}
+
+	@Override
+	public Optional<Order> getOrderById(Long id) {
+
+		return orderRepository.findById(id);
+	}
+
+	@Override
+	public Order updateOrder(Long id, OrderDto orderDto) {
+
+		Order order = getOrderById(id).get();
+		order.setDate(orderDto.getDate());
+		order.setReference(orderDto.getReference());
+		order.setArticles(orderDto.getArticles());
+
+		return orderRepository.save(order);
+
 	}
 
 }
