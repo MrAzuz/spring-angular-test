@@ -1,6 +1,7 @@
 package lu.atozdigital.api.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,6 +45,14 @@ public class ArticleServiceImpl implements ArticleService {
 	public Optional<Article> getArticleById(Long id) {
 		
 		return articleRepository.findById(id);
+	}
+
+	@Override
+	public List<Article> getArticles() {
+		
+		List<Article> articles = new ArrayList<Article>();
+		articleRepository.findAll().forEach(articles::add);
+		return articles;
 	}
 
 

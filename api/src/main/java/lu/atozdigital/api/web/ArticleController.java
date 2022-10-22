@@ -1,5 +1,6 @@
 package lu.atozdigital.api.web;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +48,22 @@ public class ArticleController {
 		} else {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
+	}
 
+	@GetMapping("/articles")
+	public ResponseEntity<List<Article>> getAllArticles() {
+
+		try {
+			List<Article> articles = articleService.getArticles();
+
+			if (articles.isEmpty()) {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
+
+			return new ResponseEntity<>(articles, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 }
