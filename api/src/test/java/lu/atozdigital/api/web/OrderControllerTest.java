@@ -1,9 +1,15 @@
 package lu.atozdigital.api.web;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.hamcrest.Matchers.*;
 
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.ArgumentMatchers.any;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 import java.math.BigDecimal;
+
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -19,6 +25,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import lu.atozdigital.api.dto.OrderDto;
 import lu.atozdigital.api.entities.Article;
 import lu.atozdigital.api.entities.Order;
 import lu.atozdigital.api.repository.ArticleRepository;
@@ -32,6 +41,8 @@ public class OrderControllerTest {
 
 	@Autowired
 	MockMvc mockMvc;
+	@Autowired
+	ObjectMapper mapper;
 	@MockBean
 	OrderService orderService;
 	@MockBean
@@ -57,6 +68,27 @@ public class OrderControllerTest {
 
 		mockMvc.perform(MockMvcRequestBuilders.get("/api/orders").contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(3))).andExpect(jsonPath("$[2].id", is(3)));
+	}
+
+	@Test
+	public void testCreateOrder() throws Exception {
+
+		String randomStr = RandomString.getAlphaNumericString(10);
+		Date date = new Date();
+		OrderDto orderToPost = new OrderDto(randomStr, date, articles);
+		Order orderToReturn = new Order(1L, orderToPost.getReference(), orderToPost.getDate(),
+				orderToPost.getArticles());
+
+		doReturn(orderToReturn).when(orderService).addOrder(any());
+
+		// Execute the POST request
+		mockMvc.perform(post("/api/orders").contentType(MediaType.APPLICATION_JSON)
+				.content(this.mapper.writeValueAsString(orderToPost)))
+
+				.andExpect(status().isCreated()).andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().is(201)).andExpect(jsonPath("$.id", is(1)))
+				.andExpect(jsonPath("$.reference", is(randomStr)));
+
 	}
 
 }

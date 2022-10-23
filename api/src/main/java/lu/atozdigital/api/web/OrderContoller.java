@@ -54,7 +54,7 @@ public class OrderContoller {
 
 	@PutMapping("/orders/{id}")
 	public ResponseEntity<Order> updateOrder(@PathVariable("id") long id, @RequestBody OrderDto orderDto) {
-		
+
 		if (orderService.getOrderById(id).isPresent()) {
 			return new ResponseEntity<>(orderService.updateOrder(id, orderDto), HttpStatus.OK);
 		} else {
