@@ -30,11 +30,12 @@ public class Order {
 		super();
 	}
 
-	public Order(Long id, String reference, Date date) {
+	public Order(Long id, String reference, Date date, List<Article> articles) {
 		super();
 		this.id = id;
 		this.reference = reference;
 		this.date = date;
+		this.articles = articles;
 	}
 
 	public Order(String reference, Date date, List<Article> articles) {

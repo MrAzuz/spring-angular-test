@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.*;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -18,53 +19,44 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import lu.atozdigital.api.entities.Article;
+import lu.atozdigital.api.entities.Order;
 import lu.atozdigital.api.repository.ArticleRepository;
 import lu.atozdigital.api.repository.OrderRepository;
-import lu.atozdigital.api.service.ArticleService;
+import lu.atozdigital.api.service.OrderService;
+import lu.atozdigital.api.util.RandomString;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(ArticleController.class)
-
-public class ArticleControllerTest {
+@WebMvcTest(OrderContoller.class)
+public class OrderControllerTest {
 
 	@Autowired
 	MockMvc mockMvc;
-	@Autowired
-	ObjectMapper mapper;
 	@MockBean
-	ArticleService articleService;
-	@MockBean
-	ArticleRepository articleRepository;
+	OrderService orderService;
 	@MockBean
 	OrderRepository orderRepository;
+	@MockBean
+	ArticleRepository articleRepository;
 
 	Article article1 = new Article(1L, "Camera", BigDecimal.valueOf(999), "1.png");
 	Article article2 = new Article(2L, "Phone", BigDecimal.valueOf(999), "2.png");
-	Article article3 = new Article(3L, "Laptop", BigDecimal.valueOf(999), "3.png");
+
+	List<Article> articles = Arrays.asList(article1, article2);
+
+	Order order1 = new Order(1L, RandomString.getAlphaNumericString(10), new Date(), articles);
+	Order order2 = new Order(2L, RandomString.getAlphaNumericString(10), new Date(), articles);
+	Order order3 = new Order(3L, RandomString.getAlphaNumericString(10), new Date(), articles);
 
 	@Test
-	public void testGetAllArticles() throws Exception {
+	public void testGetAllOrders() throws Exception {
 
-		List<Article> articles = Arrays.asList(article1, article2, article3);
+		List<Order> orders = Arrays.asList(order1, order2, order3);
 
-		Mockito.when(articleService.getArticles()).thenReturn(articles);
+		Mockito.when(orderService.getOrders()).thenReturn(orders);
 
-		mockMvc.perform(MockMvcRequestBuilders.get("/api/articles").contentType(MediaType.APPLICATION_JSON))
-				.andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(3)))
-				.andExpect(jsonPath("$[2].name", is("Laptop")));
-	}
-
-	@Test
-	public void testGetArticle() throws Exception {
-
-		Mockito.when(articleService.getArticleById(1L)).thenReturn(java.util.Optional.of(article1));
-
-		mockMvc.perform(MockMvcRequestBuilders.get("/api/articles/1").contentType(MediaType.APPLICATION_JSON))
-				.andExpect(status().isOk()).andExpect(jsonPath("$", notNullValue()))
-				.andExpect(jsonPath("$.name", is("Camera")));
+		mockMvc.perform(MockMvcRequestBuilders.get("/api/orders").contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(3))).andExpect(jsonPath("$[2].id", is(3)));
 	}
 
 }
