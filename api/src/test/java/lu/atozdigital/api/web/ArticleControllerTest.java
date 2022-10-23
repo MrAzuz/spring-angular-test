@@ -46,17 +46,21 @@ public class ArticleControllerTest {
 
 		List<Article> articles = Arrays.asList(article1, article2, article3);
 
-		Mockito.when(articleRepository.findAll()).thenReturn(articles);
-
 		Mockito.when(articleService.getArticles()).thenReturn(articles);
-		
-		mockMvc.perform(MockMvcRequestBuilders
-	            .get("/api/articles")
-	            .contentType(MediaType.APPLICATION_JSON))
-	            .andExpect(status().isOk())
-	            .andExpect(jsonPath("$", hasSize(3)))
-	            .andExpect(jsonPath("$[2].name", is("Laptop")));
 
+		mockMvc.perform(MockMvcRequestBuilders.get("/api/articles").contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(3)))
+				.andExpect(jsonPath("$[2].name", is("Laptop")));
+	}
+
+	@Test
+	public void testGetArticleById() throws Exception {
+
+		Mockito.when(articleService.getArticleById(1L)).thenReturn(java.util.Optional.of(article1));
+
+		mockMvc.perform(MockMvcRequestBuilders.get("/api/articles/1").contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk()).andExpect(jsonPath("$", notNullValue()))
+				.andExpect(jsonPath("$.name", is("Camera")));
 	}
 
 }
