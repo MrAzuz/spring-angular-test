@@ -22,10 +22,18 @@ public class Article {
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE }, mappedBy = "articles")
 	@JsonIgnore
-	private List<Order	> orders = new ArrayList<>();
+	private List<Order> orders = new ArrayList<>();
 
 	public Article() {
 		super();
+	}
+
+	public Article(Long id, String name, BigDecimal price, String picture) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.price = price;
+		this.picture = picture;
 	}
 
 	public Article(String name, BigDecimal price, String picture) {
@@ -79,10 +87,5 @@ public class Article {
 	public void setOrders(List<Order> orders) {
 		this.orders = orders;
 	}
-	
-	
-	
-	
-	
 
 }

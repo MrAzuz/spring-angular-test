@@ -31,13 +31,13 @@ public class ApiApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		
-		Article a1 = new Article("Phone", BigDecimal.valueOf(140000L), "image1");
-		Article a2 = new Article("Laptop", BigDecimal.valueOf(140000L), "image2");
-		Article a3 = new Article("Camera", BigDecimal.valueOf(140000L), "image3");
+		Article a1 = new Article("Phone", BigDecimal.valueOf(999), "1.png");
+		Article a2 = new Article("Laptop", BigDecimal.valueOf(8000), "2.png");
+		Article a3 = new Article("Camera", BigDecimal.valueOf(12000), "3.png");
 		
-		articleRepository.save(a1);
-		articleRepository.save(a2);
-		articleRepository.save(a3);
+		//articleRepository.save(a1);
+		//articleRepository.save(a2);
+		//articleRepository.save(a3);
 		
 		List<Article> articles = new ArrayList<>();
 		articles.add(a1);
@@ -57,7 +57,7 @@ public class ApiApplication implements CommandLineRunner {
 		o2.setReference(RandomString.getAlphaNumericString(10));
 		o2.setArticles(articles);
 		
-		orderRepository.save(o2);
+		//orderRepository.save(o2);
 		
 		//System.out.println(o1.toString());
 
