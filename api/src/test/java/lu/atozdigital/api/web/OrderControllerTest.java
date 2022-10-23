@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -90,5 +91,34 @@ public class OrderControllerTest {
 				.andExpect(jsonPath("$.reference", is(randomStr)));
 
 	}
+
+	/*
+	 * @Test public void testUpdateOrder() throws Exception { // Setup our mocked
+	 * service String randomStr = RandomString.getAlphaNumericString(10); Date date
+	 * = new Date();
+	 * 
+	 * OrderDto orderToPut = new OrderDto(randomStr, date, articles);
+	 * 
+	 * Order orderToReturnFindBy = new Order(1L, orderToPut.getReference(),
+	 * orderToPut.getDate(), orderToPut.getArticles());
+	 * 
+	 * Order orderToReturnSave = new Order(1L, orderToPut.getReference(),
+	 * orderToPut.getDate(), orderToPut.getArticles());
+	 * 
+	 * doReturn(Optional.of(orderToReturnFindBy)).when(orderService).getOrderById(1L
+	 * );
+	 * 
+	 * doReturn(orderToReturnSave).when(orderService).addOrder(any());
+	 * 
+	 * // Execute the POST request mockMvc.perform(put("/api/orders/" +
+	 * 1).contentType(MediaType.APPLICATION_JSON)
+	 * .content(this.mapper.writeValueAsString(orderToPut)))
+	 * 
+	 * // Validate the response code and content type
+	 * .andExpect(status().isOk()).andExpect(content().contentType(MediaType.
+	 * APPLICATION_JSON)) // Validate the returned fields
+	 * .andExpect(jsonPath("$.id", is(1))).andExpect(jsonPath("$.reference",
+	 * is(randomStr))); }
+	 */
 
 }
