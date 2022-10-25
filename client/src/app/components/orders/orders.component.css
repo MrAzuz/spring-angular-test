@@ -1,0 +1,8 @@
+.orders {
+  display: flex;
+  padding: 20px;
+}
+
+.table {
+  background-color: salmon;
+}

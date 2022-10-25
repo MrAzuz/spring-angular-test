@@ -1,0 +1,15 @@
+<div class="articles">
+  <div *ngFor="let article of articlesData">
+    <div class="card" style="width: 18rem">
+      <img src="/assets/image1.PNG" class="card-img-top" alt="..." />
+      <div class="card-body">
+        <h5 class="card-title">{{ article.name }}</h5>
+        <h4 class="card-text">{{ article.price }} <span>MAD</span></h4>
+        <a href="#" class="btn btn-primary">Buy</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="add">
+  <button class="btn btn-success" routerLink="/articles/add">+</button>
+</div>

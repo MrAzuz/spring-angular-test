@@ -1,0 +1,28 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Laptop",
+      "price": 5000,
+      "pictureUrl": "/assets/image1.PNG"
+    },
+    {
+      "id": 2,
+      "name": "Camera",
+      "price": 8000,
+      "pictureUrl": "/assets/image1.PNG"
+    },
+    {
+      "id": 3,
+      "name": "TV",
+      "price": 4000,
+      "pictureUrl": "/assets/image1.PNG"
+    },
+    {
+      "id": 4,
+      "name": "Phone",
+      "price": 3000,
+      "pictureUrl": "/assets/image1.PNG"
+    }
+  ]
+}
